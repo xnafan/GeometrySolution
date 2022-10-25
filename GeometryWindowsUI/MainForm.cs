@@ -12,15 +12,15 @@ namespace GeometryWindowsUI
         {
             InitializeComponent();
             _lineProvider = lineProvider;
-                gmtpnlLineVisualizer.LineCollection = new BindingList<Line>();
-                lstLines.DataSource = gmtpnlLineVisualizer.LineCollection; 
-            }
+            lineVisualizerPanel.LineCollection = new BindingList<Line>();
+            lstLines.DataSource = lineVisualizerPanel.LineCollection;
+        }
 
         private void lstLines_SelectedIndexChanged(object sender, EventArgs e)
         {
-            gmtpnlLineVisualizer.SelectedLines.Clear();
-            gmtpnlLineVisualizer.SelectedLines.Add((Line)lstLines.SelectedItem );
-            gmtpnlLineVisualizer.Refresh();
+            lineVisualizerPanel.SelectedLines.Clear();
+            lineVisualizerPanel.SelectedLines.Add((Line)lstLines.SelectedItem);
+            lineVisualizerPanel.Refresh();
         }
     }
 }
