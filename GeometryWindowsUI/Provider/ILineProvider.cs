@@ -8,6 +8,6 @@ namespace GeometryWindowsUI.Provider
         Line? GetLine(int id);
         bool DeleteLine(int id);
         bool UpdateLine(Line line);
-        int CreateLine(Line line);
+        int AddLine(Line line);
     }
 }

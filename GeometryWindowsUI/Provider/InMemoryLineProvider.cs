@@ -6,7 +6,7 @@ namespace GeometryWindowsUI.Provider
     {
         private List<Line> _lines = new List<Line>();
         private int _currentIndex = 0;
-        public int CreateLine(Line line)
+        public int AddLine(Line line)
         {
             line.Id = GetNextId();
             _lines.Add(line);

@@ -6,7 +6,7 @@ namespace GeometryWindowsUI
 {
     public partial class MainForm : Form
     {
-
+        public bool HasUnsavedChanges { get; private set; }
         ILineProvider _lineProvider;
         public MainForm(ILineProvider lineProvider)
         {
@@ -26,13 +26,50 @@ namespace GeometryWindowsUI
         {
             lstLines.SelectedIndex = -1;
             lstLines.SelectedItem = lineVisualizerPanel.LineCollection.LastOrDefault();
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    _lineProvider.AddLine((Line)lstLines.Items[e.NewIndex]);
+                    lineVisualizerPanel.LineCollection.ResetItem(e.NewIndex);
+                    break;
+                case ListChangedType.ItemDeleted:
+                    _lineProvider.DeleteLine()
+                    break;
+                case ListChangedType.ItemChanged:
+                default:
+                    break;
+            }
         }
 
-        private void LstLines_SelectedIndexChanged(object sender, EventArgs e)
+        private void LstLines_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            lineVisualizerPanel.SelectedLines.Clear();
-            lineVisualizerPanel.SelectedLines.Add((Line)lstLines.SelectedItem);
+            lineVisualizerPanel.SelectedLine = null;
+            lineVisualizerPanel.SelectedLine = (Line)lstLines.SelectedItem;
             lineVisualizerPanel.Refresh();
+            deleteSelectedLine.Enabled = lstLines.SelectedIndex > -1;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewDrawing();
+        }
+
+        private void NewDrawing()
+        {
+            // if(HasUnsavedChanges && lstLines                         )
+        }
+
+        private void deleteSelectedLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedLine();
+        }
+
+        private void DeleteSelectedLine()
+        {
+            if(_lineProvider.DeleteLine(((Line)lstLines.SelectedItem).Id))
+            {
+                lineVisualizerPanel.LineCollection.Remove((Line)lstLines.SelectedItem);
+            }
         }
     }
 }
