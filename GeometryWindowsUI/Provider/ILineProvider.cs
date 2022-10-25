@@ -7,7 +7,7 @@ namespace GeometryWindowsUI.Provider
         IEnumerable<Line> GetLines();
         Line? GetLine(int id);
         bool DeleteLine(int id);
-        void UpdateLine(Line line);
+        bool UpdateLine(Line line);
         int CreateLine(Line line);
     }
 }

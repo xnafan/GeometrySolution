@@ -13,7 +13,7 @@ namespace GeometryWindowsUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm(new RestServiceLineProvider("https://service.com")));
+            Application.Run(new MainForm(new InMemoryLineProvider()));
         }
     }
 }

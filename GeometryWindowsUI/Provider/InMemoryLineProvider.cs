@@ -1,42 +1,36 @@
 ﻿using GeometryWindowsUI.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeometryWindowsUI.Provider
 {
     public class InMemoryLineProvider : ILineProvider
     {
         private List<Line> _lines = new List<Line>();
-        private int _nextIndex = 0;
+        private int _currentIndex = 0;
         public int CreateLine(Line line)
         {
-            _nextIndex++;
-            line.Id = _nextIndex;
+            line.Id = GetNextId();
             _lines.Add(line);
-            return _nextIndex;
+            return line.Id;
         }
 
-        public bool DeleteLine(int id)
+        public bool DeleteLine(int id) => _lines.RemoveAll(line => line.Id == id) > 0;
+
+        public Line? GetLine(int id) => _lines.FirstOrDefault(line => line.Id == id);
+
+        public IEnumerable<Line> GetLines() => _lines;
+
+        public bool UpdateLine(Line line)
         {
-            return _lines.Remove(line => line.i)
+            Line? foundLine = GetLine(line.Id);
+            if (foundLine != null)
+            {
+                foundLine.Point1 = line.Point1;
+                foundLine.Point2 = line.Point2;
+                return true;
+            }
+            return false;
         }
 
-        public Line? GetLine(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Line> GetLines()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateLine(Line line)
-        {
-            throw new NotImplementedException();
-        }
+        private int GetNextId() => ++_currentIndex;
     }
 }
