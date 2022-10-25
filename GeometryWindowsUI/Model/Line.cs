@@ -1,6 +1,6 @@
 ﻿namespace GeometryWindowsUI.Model
 {
-    internal class Line
+    public class Line
     {
         public int Id { get; set; }
         public Point Point1 { get; set; }

@@ -1,5 +1,4 @@
 ﻿using GeometryWindowsUI.Model;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,25 +7,21 @@ using System.Threading.Tasks;
 
 namespace GeometryWindowsUI.Provider
 {
-    public class RestServiceLineProvider : ILineProvider
+    public class InMemoryLineProvider : ILineProvider
     {
-        public string BaseUrl { get; private set; }
-        private RestClient _restClient;
-
-        public RestServiceLineProvider(string baseUrl)
-        {
-            BaseUrl = baseUrl;
-            _restClient = new RestClient(BaseUrl);
-        }
-
+        private List<Line> _lines = new List<Line>();
+        private int _nextIndex = 0;
         public int CreateLine(Line line)
         {
-            
+            _nextIndex++;
+            line.Id = _nextIndex;
+            _lines.Add(line);
+            return _nextIndex;
         }
 
         public bool DeleteLine(int id)
         {
-            throw new NotImplementedException();
+            return _lines.Remove(line => line.i)
         }
 
         public Line? GetLine(int id)

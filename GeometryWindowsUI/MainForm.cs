@@ -1,10 +1,15 @@
+using GeometryWindowsUI.Provider;
+
 namespace GeometryWindowsUI
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+
+        ILineProvider _lineProvider;
+        public MainForm(ILineProvider lineProvider)
         {
             InitializeComponent();
+            _lineProvider = lineProvider;
         }
     }
 }
