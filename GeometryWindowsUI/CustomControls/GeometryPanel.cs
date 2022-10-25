@@ -39,7 +39,12 @@ namespace GeometryWindowsUI.CustomControls
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            LineCollection.Add(CurrentLine);
+            if(CurrentLine.GetLength() >= 5) {
+             
+                LineCollection.Add(CurrentLine);
+              //  new BindingSource().ResetBindings(false);
+            }
+            CurrentLine = null;
         }
 
         private void BeginNewLine(Point location) => CurrentLine = new Line(location, location);
