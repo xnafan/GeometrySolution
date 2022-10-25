@@ -12,8 +12,10 @@ namespace GeometryWindowsUI.CustomControls
         private Pen _whitePen = new Pen(Brushes.White, _lineWidth);
         private Pen _redPen = new Pen(Brushes.Red, _lineWidth);
         public Line? CurrentLine { get; set; }
-        public BindingList<Line> LineCollection { get; set; } = new();
+        public ListBox.ObjectCollection? LineCollection { get; set; }
         public Line? SelectedLine { get; set; } = null;
+
+        public event EventHandler<LineEventArgs> LineDrawn;
         #endregion
         
         #region Constructor
@@ -42,7 +44,10 @@ namespace GeometryWindowsUI.CustomControls
 
         private void AddCurrentLineIfLongEnough()
         {
-            if (CurrentLine != null && CurrentLine.GetLength() >= 5) { LineCollection.Add(CurrentLine); }
+            if (CurrentLine != null && CurrentLine.GetLength() >= 5) 
+            {
+                LineDrawn?.Invoke(this, new LineEventArgs(CurrentLine));
+            }
         }
 
         private void BeginNewLine(Point location) => CurrentLine = new Line(location, location);
@@ -59,10 +64,13 @@ namespace GeometryWindowsUI.CustomControls
             {
                 e.Graphics.DrawLine(_whitePen, CurrentLine.Point1, CurrentLine.Point2);
             }
-            foreach (var line in LineCollection)
+            if (LineCollection != null)
             {
-                Pen penColor = (SelectedLine == line) ? _redPen : _cyanPen;
-                e.Graphics.DrawLine(penColor, line.Point1, line.Point2);
+                foreach (var line in LineCollection)
+                {
+                    Pen penColor = (SelectedLine == line) ? _redPen : _cyanPen;
+                    e.Graphics.DrawLine(penColor, ((Line)line).Point1, ((Line)line).Point2);
+                } 
             }
         } 
         #endregion

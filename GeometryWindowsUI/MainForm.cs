@@ -12,51 +12,26 @@ namespace GeometryWindowsUI
         {
             InitializeComponent();
             _lineProvider = lineProvider;
-            lineVisualizerPanel.LineCollection = new BindingList<Line>();
-            lstLines.DataSource = lineVisualizerPanel.LineCollection;
-            lineVisualizerPanel.LineCollection.ListChanged += LineCollection_ListChanged;
+            lineVisualizerPanel.LineCollection = lstLines.Items;
+            lineVisualizerPanel.LineDrawn += LineVisualizerPanel_LineAdded;
             lstLines.SelectedIndexChanged += LstLines_SelectedIndexChanged;
         }
 
-       
-        //HACK: when adding data items to BindingList<T>
-        //the first item does not trigger the selected index changed
-        //This workaround fixes it.
-        private void LineCollection_ListChanged(object? sender, ListChangedEventArgs e)
+        private void LineVisualizerPanel_LineAdded(object? sender, CustomControls.LineEventArgs e)
         {
-            lstLines.SelectedIndex = -1;
-            lstLines.SelectedItem = lineVisualizerPanel.LineCollection.LastOrDefault();
-            switch (e.ListChangedType)
-            {
-                case ListChangedType.ItemAdded:
-                    _lineProvider.AddLine((Line)lstLines.Items[e.NewIndex]);
-                    lineVisualizerPanel.LineCollection.ResetItem(e.NewIndex);
-                    break;
-                case ListChangedType.ItemDeleted:
-                    _lineProvider.DeleteLine()
-                    break;
-                case ListChangedType.ItemChanged:
-                default:
-                    break;
-            }
+            AddLine(e.Line);
+        }
+
+        private void AddLine(Line line)
+        {
+            if (_lineProvider.AddLine(line) > 0) {lstLines.Items.Add(line);}
+            else { MessageBox.Show($"Error saving new line: {line}"); }
         }
 
         private void LstLines_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            lineVisualizerPanel.SelectedLine = null;
             lineVisualizerPanel.SelectedLine = (Line)lstLines.SelectedItem;
             lineVisualizerPanel.Refresh();
-            deleteSelectedLine.Enabled = lstLines.SelectedIndex > -1;
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NewDrawing();
-        }
-
-        private void NewDrawing()
-        {
-            // if(HasUnsavedChanges && lstLines                         )
         }
 
         private void deleteSelectedLineToolStripMenuItem_Click(object sender, EventArgs e)
@@ -66,10 +41,20 @@ namespace GeometryWindowsUI
 
         private void DeleteSelectedLine()
         {
-            if(_lineProvider.DeleteLine(((Line)lstLines.SelectedItem).Id))
+            if (lstLines.SelectedIndex == -1) { return; }
+            if (_lineProvider.DeleteLine(((Line)lstLines.SelectedItem).Id))
             {
-                lineVisualizerPanel.LineCollection.Remove((Line)lstLines.SelectedItem);
+                lineVisualizerPanel.LineCollection?.Remove((Line)lstLines.SelectedItem);
             }
+            else
+            {
+                MessageBox.Show($"Line {lstLines.SelectedItem} not deleted.");
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+                if (e.KeyCode == Keys.Delete) { DeleteSelectedLine(); }
         }
     }
 }
