@@ -1,13 +1,15 @@
 using GeometryWindowsUI.Model;
 using GeometryWindowsUI.Provider;
-using System.ComponentModel;
 
 namespace GeometryWindowsUI
 {
     public partial class MainForm : Form
     {
-        public bool HasUnsavedChanges { get; private set; }
-        ILineProvider _lineProvider;
+        #region Properties
+        ILineProvider _lineProvider; 
+        #endregion
+
+        #region Constructor
         public MainForm(ILineProvider lineProvider)
         {
             InitializeComponent();
@@ -15,18 +17,15 @@ namespace GeometryWindowsUI
             lineVisualizerPanel.LineCollection = lstLines.Items;
             lineVisualizerPanel.LineDrawn += LineVisualizerPanel_LineAdded;
             lstLines.SelectedIndexChanged += LstLines_SelectedIndexChanged;
-        }
+        } 
+        #endregion
 
+        #region Event handling
         private void LineVisualizerPanel_LineAdded(object? sender, CustomControls.LineEventArgs e)
         {
             AddLine(e.Line);
         }
 
-        private void AddLine(Line line)
-        {
-            if (_lineProvider.AddLine(line) > 0) {lstLines.Items.Add(line);}
-            else { MessageBox.Show($"Error saving new line: {line}"); }
-        }
 
         private void LstLines_SelectedIndexChanged(object? sender, EventArgs e)
         {
@@ -37,6 +36,19 @@ namespace GeometryWindowsUI
         private void deleteSelectedLineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteSelectedLine();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete) { DeleteSelectedLine(); }
+        }
+        #endregion
+
+        #region CRUD methods
+        private void AddLine(Line line)
+        {
+            if (_lineProvider.AddLine(line) > 0) { lstLines.Items.Add(line); }
+            else { MessageBox.Show($"Error saving new line: {line}"); }
         }
 
         private void DeleteSelectedLine()
@@ -50,11 +62,7 @@ namespace GeometryWindowsUI
             {
                 MessageBox.Show($"Line {lstLines.SelectedItem} not deleted.");
             }
-        }
-
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-                if (e.KeyCode == Keys.Delete) { DeleteSelectedLine(); }
-        }
+        } 
+        #endregion
     }
 }

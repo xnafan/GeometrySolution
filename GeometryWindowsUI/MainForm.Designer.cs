@@ -70,7 +70,7 @@ namespace GeometryWindowsUI
             // 
             // lineVisualizerPanel
             // 
-            this.lineVisualizerPanel.CurrentLine = null;
+            this.lineVisualizerPanel.LineCurrentlyBeingDrawnWithMouse = null;
             this.lineVisualizerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lineVisualizerPanel.LineCollection = null;
             this.lineVisualizerPanel.Location = new System.Drawing.Point(0, 0);

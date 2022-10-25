@@ -1,5 +1,4 @@
 ﻿using GeometryWindowsUI.Model;
-using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 namespace GeometryWindowsUI.CustomControls
@@ -11,65 +10,65 @@ namespace GeometryWindowsUI.CustomControls
         private Pen _cyanPen = new Pen(Brushes.Cyan, _lineWidth);
         private Pen _whitePen = new Pen(Brushes.White, _lineWidth);
         private Pen _redPen = new Pen(Brushes.Red, _lineWidth);
-        public Line? CurrentLine { get; set; }
+        public Line? LineCurrentlyBeingDrawnWithMouse { get; set; }
         public ListBox.ObjectCollection? LineCollection { get; set; }
         public Line? SelectedLine { get; set; } = null;
 
-        public event EventHandler<LineEventArgs> LineDrawn;
+        public event EventHandler<LineEventArgs>? LineDrawn;
         #endregion
-        
-        #region Constructor
-        public GeometryPanel() => DoubleBuffered = true;
-        #endregion
-       
-        #region Eventhandling for mouse down, move, up
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-            BeginNewLine(e.Location);
-        }
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            if (CurrentLine != null) { CurrentLine.Point2 = e.Location; }
-            Refresh();
-        }
 
-        protected override void OnMouseUp(MouseEventArgs e)
+        #region Constructor
+        public GeometryPanel()
         {
-            base.OnMouseUp(e);
-            AddCurrentLineIfLongEnough();
-            CurrentLine = null;
+            DoubleBuffered = true;
+            MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
+            MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
+            MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
+        }
+        #endregion
+
+        #region Methods for drawing lines
+        private void MoveCurrentLineEndPointToMousePointer(MouseEventArgs e)
+        {
+            if (LineCurrentlyBeingDrawnWithMouse != null) { LineCurrentlyBeingDrawnWithMouse.Point2 = e.Location; }
+            Refresh();
         }
 
         private void AddCurrentLineIfLongEnough()
         {
-            if (CurrentLine != null && CurrentLine.GetLength() >= 5) 
+            if (LineCurrentlyBeingDrawnWithMouse != null && LineCurrentlyBeingDrawnWithMouse.GetLength() >= 5)
             {
-                LineDrawn?.Invoke(this, new LineEventArgs(CurrentLine));
+                LineDrawn?.Invoke(this, new LineEventArgs(LineCurrentlyBeingDrawnWithMouse));
+                LineCurrentlyBeingDrawnWithMouse = null;
             }
         }
 
-        private void BeginNewLine(Point location) => CurrentLine = new Line(location, location);
+        private void BeginNewLine(Point location) => LineCurrentlyBeingDrawnWithMouse = new Line(location, location);
 
         #endregion
 
-        #region Painting
+        #region Repainting the Panel surface
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            
+            //draw background
             e.Graphics.FillRegion(Brushes.Navy, new Region(Bounds));
-            if (CurrentLine != null)
+
+            //draw currentline there is one
+            if (LineCurrentlyBeingDrawnWithMouse != null)
             {
-                e.Graphics.DrawLine(_whitePen, CurrentLine.Point1, CurrentLine.Point2);
+                e.Graphics.DrawLine(_whitePen, LineCurrentlyBeingDrawnWithMouse.Point1, LineCurrentlyBeingDrawnWithMouse.Point2);
             }
+            //draw all lines
             if (LineCollection != null)
             {
-                foreach (var line in LineCollection)
+                foreach (Line line in LineCollection)
                 {
+                    //use another color (red pen) if the line is the selected one
                     Pen penColor = (SelectedLine == line) ? _redPen : _cyanPen;
-                    e.Graphics.DrawLine(penColor, ((Line)line).Point1, ((Line)line).Point2);
+                    e.Graphics.DrawLine(penColor, line.Point1, line.Point2);
                 } 
             }
         } 
