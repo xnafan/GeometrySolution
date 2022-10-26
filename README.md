@@ -37,21 +37,21 @@ Alternately, it can communicate with a REST service (LinesController), and the p
 
 The core model object in this solution is a Line.
 A Line is merely two Points and an Id (key):
-  
-    public class Line
+` 
+public class Line
+{
+    public Line(Point point1, Point point2)
     {
-        public Line(Point point1, Point point2)
-        {
-            Point1 = point1;
-            Point2 = point2;
-        }
-
-        public int Id { get; set; }
-        public Point Point1 { get; set; }
-        public Point Point2 { get; set; }
-        public override string ToString() => $"Line {Id} : {Point1} to {Point2}";
+        Point1 = point1;
+        Point2 = point2;
     }
 
+    public int Id { get; set; }
+    public Point Point1 { get; set; }
+    public Point Point2 { get; set; }
+    public override string ToString() => $"Line {Id} : {Point1} to {Point2}";
+}
+`
 
 ## Windows Forms UI
 The UI itself can be seen here
@@ -68,14 +68,15 @@ This is the constructor of the LineDrawingPanel, where you can see that
 * a MouseMove event means "move the end of the current line, if we're drawing)
 * a MouseUp event means "We're done, if that drew a line (it's long enough to not be a single click), save it"
 
-      public LineDrawingPanel()
-    {
-        DoubleBuffered = true; //to avoid flicker when drawing the background
-        MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
-        MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
-        MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
-    }
-
+`
+public LineDrawingPanel()
+{
+    DoubleBuffered = true; //to avoid flicker when drawing the background
+    MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
+    MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
+    MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
+}
+`
 
 ### Data consistency across ListBox, Panel and storage medium
 To ensure that the LineDrawingPanel, the ListBox and the persistence medium (the ILineProvider implementation used) are all in sync, the LineDrawingPanel has a custom LineDrawn event, which the main form subscribes to. The event is raised whenever a new line is drawn and the main form then persists the new line, and if successful, adds it to the ListBox.
