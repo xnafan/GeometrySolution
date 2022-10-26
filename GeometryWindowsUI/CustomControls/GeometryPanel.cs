@@ -6,10 +6,10 @@ namespace GeometryWindowsUI.CustomControls
     internal class GeometryPanel : Panel
     {
         #region Properties and variables
-        private static readonly int _lineWidth = 3;
-        private Pen _cyanPen = new Pen(Brushes.Cyan, _lineWidth);
-        private Pen _whitePen = new Pen(Brushes.White, _lineWidth);
-        private Pen _redPen = new Pen(Brushes.Red, _lineWidth);
+        private static readonly int _lineWidth = 5;
+        private readonly Pen _cyanPen = new Pen(Brushes.Cyan, _lineWidth);
+        private readonly Pen _whitePen = new Pen(Brushes.White, _lineWidth);
+        private readonly Pen _redPen = new Pen(Brushes.Red, _lineWidth);
         public Line? LineCurrentlyBeingDrawnWithMouse { get; set; }
         public ListBox.ObjectCollection? LineCollection { get; set; }
         public Line? SelectedLine { get; set; } = null;
@@ -20,7 +20,7 @@ namespace GeometryWindowsUI.CustomControls
         #region Constructor
         public GeometryPanel()
         {
-            DoubleBuffered = true;
+            DoubleBuffered = true; //to avoid flicker when drawing the background
             MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
             MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
             MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
