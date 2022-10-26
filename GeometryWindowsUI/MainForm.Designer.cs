@@ -34,7 +34,7 @@ namespace GeometryWindowsUI
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.lstLines = new System.Windows.Forms.ListBox();
-            this.lineVisualizerPanel = new GeometryWindowsUI.CustomControls.GeometryPanel();
+            this.lineVisualizerPanel = new GeometryWindowsUI.CustomControls.LineDrawingPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -87,8 +87,9 @@ namespace GeometryWindowsUI
             // 
             // lstLines
             // 
-            this.lstLines.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lstLines.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstLines.FormattingEnabled = true;
             this.lstLines.ItemHeight = 32;
             this.lstLines.Location = new System.Drawing.Point(0, 0);
@@ -130,7 +131,7 @@ namespace GeometryWindowsUI
         #endregion
 
         private SplitContainer splitContainer1;
-        private GeometryPanel lineVisualizerPanel;
+        private LineDrawingPanel lineVisualizerPanel;
         private ListBox lstLines;
         private Button btnEdit;
         private Button btnDelete;

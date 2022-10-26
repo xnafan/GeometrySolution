@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace GeometryWindowsUI.CustomControls
 {
-    internal class GeometryPanel : Panel
+    internal class LineDrawingPanel : Panel
     {
         #region Properties and variables
         private static readonly int _lineWidth = 5;
@@ -19,7 +19,7 @@ namespace GeometryWindowsUI.CustomControls
         #endregion
 
         #region Constructor
-        public GeometryPanel()
+        public LineDrawingPanel()
         {
             DoubleBuffered = true; //to avoid flicker when drawing the background
             MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
