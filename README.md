@@ -61,7 +61,23 @@ It is a simple window with two main elements:
 * A listbox which has a list of the Line objects retrieved from the data source (any ILineProvider implementation), and which shows the Line objects using their custom ToString() implementation.
 * A custom control [LineDrawingPanel]([url](https://github.com/xnafan/GeometrySolution/blob/master/GeometryWindowsUI/CustomControls/LineDrawingPanel.cs)), which is a very compact control which subscribes to the mouse events (down, move, up) and has a custom Paint implementation to draw all the lines in the ListBox, with the currently selected in a different color.
 
-## Data consistency across ListBox, Panel and storage medium
+### LineDrawingPanel core implementation
+
+This is the constructor of the LineDrawingPanel, where you can see that 
+* a MouseDown event means "begin a new line"
+* a MouseMove event means "move the end of the current line, if we're drawing)
+* a MouseUp event means "We're done, if that drew a line (it's long enough to not be a single click), save it"
+
+    public LineDrawingPanel()
+    {
+        DoubleBuffered = true; //to avoid flicker when drawing the background
+        MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
+        MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
+        MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
+    }
+
+
+### Data consistency across ListBox, Panel and storage medium
 To ensure that the LineDrawingPanel, the ListBox and the persistence medium (the ILineProvider implementation used) are all in sync, the LineDrawingPanel has a custom LineDrawn event, which the main form subscribes to. The event is raised whenever a new line is drawn and the main form then persists the new line, and if successful, adds it to the ListBox.
 
 ## Line editor dialog
