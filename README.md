@@ -12,16 +12,16 @@ Everything has been kept as simple as possible, to focus on the functionality an
 # Architecture overview
 
 All layers and tiers are separated from the layers below them using dependency injection of a ILineProvider implementation:
-
-    public interface ILineProvider
-    {
-        IEnumerable<Line> GetLines();
-        Line? GetLine(int id);
-        bool DeleteLine(int id);
-        bool UpdateLine(Line line);
-        int AddLine(Line line);
-    }
-
+```
+public interface ILineProvider
+{
+    IEnumerable<Line> GetLines();
+    Line? GetLine(int id);
+    bool DeleteLine(int id);
+    bool UpdateLine(Line line);
+    int AddLine(Line line);
+}
+```
 These implementations already exist: 
 * MS SQL server (using Dapper)
 * In-memory store (for testing).
@@ -68,7 +68,7 @@ This is the constructor of the LineDrawingPanel, where you can see that
 * a MouseMove event means "move the end of the current line, if we're drawing)
 * a MouseUp event means "We're done, if that drew a line (it's long enough to not be a single click), save it"
 
-`
+```
 public LineDrawingPanel()
 {
     DoubleBuffered = true; //to avoid flicker when drawing the background
@@ -76,7 +76,7 @@ public LineDrawingPanel()
     MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
     MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
 }
-`
+```
 
 ### Data consistency across ListBox, Panel and storage medium
 To ensure that the LineDrawingPanel, the ListBox and the persistence medium (the ILineProvider implementation used) are all in sync, the LineDrawingPanel has a custom LineDrawn event, which the main form subscribes to. The event is raised whenever a new line is drawn and the main form then persists the new line, and if successful, adds it to the ListBox.
@@ -91,28 +91,29 @@ Any changes are updated in the underlying ILineProvider immediately and in the L
 # REST API (LinesController)
 Simple CRUD service using default read/write controller implementation in VS.NET:
 
-    public class LinesController : ControllerBase
-    {
-        ILineProvider _lineProvider;
+```
+public class LinesController : ControllerBase
+{
+    ILineProvider _lineProvider;
 
-        public LinesController(ILineProvider lineProvider) => _lineProvider = lineProvider;
+    public LinesController(ILineProvider lineProvider) => _lineProvider = lineProvider;
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetLines());
+    [HttpGet]
+    public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetLines());
 
-        [HttpGet("{id}")]
-        public ActionResult<Line> Get(int id) => Ok(_lineProvider.GetLine(id));
+    [HttpGet("{id}")]
+    public ActionResult<Line> Get(int id) => Ok(_lineProvider.GetLine(id));
 
-        [HttpPost]
-        public int Post([FromBody] Line value) => _lineProvider.AddLine(value);
+    [HttpPost]
+    public int Post([FromBody] Line value) => _lineProvider.AddLine(value);
 
-        [HttpPut()]
-        public ActionResult<bool> Put([FromBody] Line value) => _lineProvider.UpdateLine(value);
+    [HttpPut()]
+    public ActionResult<bool> Put([FromBody] Line value) => _lineProvider.UpdateLine(value);
 
-        [HttpDelete("{id}")]
-        public ActionResult<bool> Delete(int id) => _lineProvider.DeleteLine(id) ? Ok(true) : NotFound  (false);
-    }
-
+    [HttpDelete("{id}")]
+    public ActionResult<bool> Delete(int id) => _lineProvider.DeleteLine(id) ? Ok(true) : NotFound  (false);
+}
+```
 
 # Data access project
 
