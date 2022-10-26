@@ -23,8 +23,8 @@ namespace GeometryWindowsUI.CustomControls
         {
             DoubleBuffered = true; //to avoid flicker when drawing the background
             MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
-            MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
             MouseMove += (object? sender, MouseEventArgs e) => MoveCurrentLineEndPointToMousePointer(e);
+            MouseUp += (object? sender, MouseEventArgs e) => AddCurrentLineIfLongEnough();
         }
         #endregion
 

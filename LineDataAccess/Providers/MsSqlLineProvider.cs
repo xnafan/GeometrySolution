@@ -2,8 +2,6 @@
 using LineDataAccess.Model;
 using Dapper;
 using System.Data.SqlClient;
-using LineDataAccess.Tools;
-using System.Runtime.InteropServices;
 using System.Drawing;
 
 namespace LineDataAccess.Providers
@@ -21,7 +19,7 @@ namespace LineDataAccess.Providers
 
         #endregion
         public MsSqlLineProvider(string connectionString) => ConnectionString = connectionString;
-        private IDbConnection CreateConnection () => new SqlConnection(ConnectionString);
+        private IDbConnection CreateConnection() => new SqlConnection(ConnectionString);
 
         #region Dapper CRUD
         public int AddLine(Line line) => CreateConnection().ExecuteScalar<int>(INSERT_SQL, new FlatLine(line));
@@ -33,6 +31,12 @@ namespace LineDataAccess.Providers
 
         #endregion
 
+        //This struct is a helper class to facilitate conversion
+        //to and from a Line to a model object usable by Dapper.
+        //The issue is that the Point object attributes on the Line object
+        //have their own X and Y attributes, which aren't addressable
+        //when saving/loading from DB using Dapper.
+        // The FlatLine class stores the two Point structs' X and Y on itself.
         struct FlatLine
         {
             public int Id = 0;
@@ -40,7 +44,7 @@ namespace LineDataAccess.Providers
             public int Point1_y { get; set; } = 0;
             public int Point2_x { get; set; } = 0;
             public int Point2_y { get; set; } = 0;
-            public FlatLine(){}
+            public FlatLine() { }
             public FlatLine(Line line)
             {
                 Id = line.Id;
@@ -49,7 +53,7 @@ namespace LineDataAccess.Providers
                 Point2_x = line.Point2.X;
                 Point2_y = line.Point2.Y;
             }
-            public Line ToLine() => new Line(new Point(Point1_x, Point1_y), new Point(Point2_x, Point2_y)) { Id = this.Id};
+            public Line ToLine() => new Line(new Point(Point1_x, Point1_y), new Point(Point2_x, Point2_y)) { Id = this.Id };
         }
     }
 }
