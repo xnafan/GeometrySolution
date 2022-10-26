@@ -37,7 +37,7 @@ Alternately, it can communicate with a REST service (LinesController), and the p
 
 The core model object in this solution is a Line.
 A Line is merely two Points and an Id (key):
-` 
+```
 public class Line
 {
     public Line(Point point1, Point point2)
@@ -51,7 +51,7 @@ public class Line
     public Point Point2 { get; set; }
     public override string ToString() => $"Line {Id} : {Point1} to {Point2}";
 }
-`
+```
 
 ## Windows Forms UI
 The UI itself can be seen here
