@@ -36,10 +36,7 @@ namespace GeometryWindowsUI
             numPoint2_Y.Value = Line.Point2.Y;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            CopyValuesFromControlsToLine();
-        }
+        private void btnOk_Click(object sender, EventArgs e) => CopyValuesFromControlsToLine();
 
         private void CopyValuesFromControlsToLine()
         {

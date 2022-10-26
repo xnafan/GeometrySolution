@@ -12,7 +12,6 @@ namespace LineDataAccess.Providers
             _lines.Add(line);
             return line.Id;
         }
-
         public bool DeleteLine(int id) => _lines.RemoveAll(line => line.Id == id) > 0;
 
         public Line? GetLine(int id) => _lines.FirstOrDefault(line => line.Id == id);
@@ -30,7 +29,6 @@ namespace LineDataAccess.Providers
             }
             return false;
         }
-
         private int GetNextId() => ++_currentIndex;
     }
 }

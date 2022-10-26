@@ -1,4 +1,3 @@
-using GeometryWindowsUI.Provider;
 using LineDataAccess.Providers;
 
 namespace LineService
@@ -9,7 +8,8 @@ namespace LineService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<ILineProvider, InMemoryLineProvider>();
+            //builder.Services.AddSingleton<ILineProvider, InMemoryLineProvider>();
+            builder.Services.AddSingleton<ILineProvider>(_ => new MsSqlLineProvider("Server=.;Database=Geometry;Trusted_Connection=True;"));
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -25,11 +25,8 @@ namespace LineService
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.Run();
         }
     }

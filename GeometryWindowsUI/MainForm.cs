@@ -17,6 +17,7 @@ namespace GeometryWindowsUI
             lineVisualizerPanel.LineCollection = lstLines.Items;
             lineVisualizerPanel.LineDrawn += LineVisualizerPanel_LineAdded;
             lstLines.SelectedIndexChanged += LstLines_SelectedIndexChanged;
+            LoadLines();
         }
         #endregion
 
@@ -86,6 +87,12 @@ namespace GeometryWindowsUI
                 //and ask the line panel to redraw
                 lineVisualizerPanel.Refresh();
             }
+        }
+
+        private void LoadLines()
+        {
+            lstLines.Items.Clear();
+            _lineProvider.GetLines().ToList().ForEach(line => lstLines.Items.Add(line));
         }
         #endregion
 
