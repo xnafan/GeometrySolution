@@ -26,11 +26,15 @@ namespace GeometryWindowsUI
             AddLine(e.Line);
         }
 
+        private void btnEdit_Click(object sender, EventArgs e) => EditSelectedLine();
+
+        private void btnDelete_Click(object sender, EventArgs e) => DeleteSelectedLine();
 
         private void LstLines_SelectedIndexChanged(object? sender, EventArgs e)
         {
             lineVisualizerPanel.SelectedLine = (Line)lstLines.SelectedItem;
             lineVisualizerPanel.Refresh();
+            btnDelete.Enabled = btnEdit.Enabled = lstLines.SelectedIndex != -1;
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -79,6 +83,7 @@ namespace GeometryWindowsUI
             }
         }
         #endregion
+
 
     }
 }

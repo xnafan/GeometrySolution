@@ -31,6 +31,8 @@ namespace GeometryWindowsUI
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.lstLines = new System.Windows.Forms.ListBox();
             this.lineVisualizerPanel = new GeometryWindowsUI.CustomControls.GeometryPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -47,6 +49,8 @@ namespace GeometryWindowsUI
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnEdit);
+            this.splitContainer1.Panel1.Controls.Add(this.btnDelete);
             this.splitContainer1.Panel1.Controls.Add(this.lstLines);
             // 
             // splitContainer1.Panel2
@@ -57,14 +61,39 @@ namespace GeometryWindowsUI
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnEdit.Enabled = false;
+            this.btnEdit.Location = new System.Drawing.Point(0, 722);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(448, 56);
+            this.btnEdit.TabIndex = 2;
+            this.btnEdit.Text = "&Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Location = new System.Drawing.Point(0, 778);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(448, 59);
+            this.btnDelete.TabIndex = 1;
+            this.btnDelete.Text = "&Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // lstLines
             // 
-            this.lstLines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstLines.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lstLines.FormattingEnabled = true;
             this.lstLines.ItemHeight = 32;
             this.lstLines.Location = new System.Drawing.Point(0, 0);
             this.lstLines.Name = "lstLines";
-            this.lstLines.Size = new System.Drawing.Size(448, 837);
+            this.lstLines.Size = new System.Drawing.Size(448, 740);
             this.lstLines.TabIndex = 0;
             this.lstLines.DoubleClick += new System.EventHandler(this.lstLines_DoubleClick);
             // 
@@ -103,5 +132,7 @@ namespace GeometryWindowsUI
         private SplitContainer splitContainer1;
         private GeometryPanel lineVisualizerPanel;
         private ListBox lstLines;
+        private Button btnEdit;
+        private Button btnDelete;
     }
 }
