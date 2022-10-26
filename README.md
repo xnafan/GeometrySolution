@@ -5,7 +5,8 @@ The Geometry Solution will consist of:
 * REST service (ASP.NET Web API) which has the CRUD functionality (not yet implemented)
 * Data Access Layer (class library talking to MS SQL Server using Dapper) (not yet implemented)
 
-<img width="521" alt="image" src="https://user-images.githubusercontent.com/3811290/197883633-cf406364-f295-4927-9745-3112c2fd08b3.png">
+<img width="677" alt="image" src="https://user-images.githubusercontent.com/3811290/197964168-0d438c1e-43ea-4deb-ab25-f9a38505d945.png">
+
 
 ## Windows Forms UI
 Currently the Windows Forms UI is implemented, and can communicate with a persistence layer using the ILineProvider interface:
