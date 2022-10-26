@@ -1,4 +1,5 @@
-﻿using GeometryWindowsUI.Model;
+﻿using GeometryWindowsUI.Tools;
+using LineDataAccess.Model;
 using System.Drawing.Drawing2D;
 
 namespace GeometryWindowsUI.CustomControls

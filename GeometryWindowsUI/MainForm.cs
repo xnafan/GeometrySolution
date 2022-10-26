@@ -1,5 +1,5 @@
-using GeometryWindowsUI.Model;
-using GeometryWindowsUI.Provider;
+using LineDataAccess.Model;
+using LineDataAccess.Providers;
 
 namespace GeometryWindowsUI
 {
@@ -49,7 +49,12 @@ namespace GeometryWindowsUI
         #region CRUD methods
         private void AddLine(Line line)
         {
-            if (_lineProvider.AddLine(line) > 0) { lstLines.Items.Add(line); }
+            int newId = _lineProvider.AddLine(line);
+            if (newId > 0)
+            {
+                line.Id = newId;
+                lstLines.Items.Add(line); 
+            }
             else { MessageBox.Show($"Error saving new line: {line}"); }
         }
 
@@ -83,7 +88,6 @@ namespace GeometryWindowsUI
             }
         }
         #endregion
-
 
     }
 }

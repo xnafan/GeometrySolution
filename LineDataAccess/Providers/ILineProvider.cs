@@ -1,6 +1,6 @@
-﻿using GeometryWindowsUI.Model;
+﻿using LineDataAccess.Model;
 
-namespace GeometryWindowsUI.Provider
+namespace LineDataAccess.Providers
 {
     public interface ILineProvider
     {
