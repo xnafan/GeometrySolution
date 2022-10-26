@@ -4,15 +4,13 @@ namespace GeometryWindowsUI
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            
+            //we inject the Form's dependency on a storage medium
+            //into the constructor of the MainForm:
             Application.Run(new MainForm(new InMemoryLineProvider()));
         }
     }

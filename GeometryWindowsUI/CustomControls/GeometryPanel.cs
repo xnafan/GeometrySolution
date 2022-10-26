@@ -39,8 +39,8 @@ namespace GeometryWindowsUI.CustomControls
             if (LineCurrentlyBeingDrawnWithMouse != null && LineCurrentlyBeingDrawnWithMouse.GetLength() >= 5)
             {
                 LineDrawn?.Invoke(this, new LineEventArgs(LineCurrentlyBeingDrawnWithMouse));
-                LineCurrentlyBeingDrawnWithMouse = null;
             }
+            LineCurrentlyBeingDrawnWithMouse = null;
         }
 
         private void BeginNewLine(Point location) => LineCurrentlyBeingDrawnWithMouse = new Line(location, location);

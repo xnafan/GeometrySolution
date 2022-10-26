@@ -6,7 +6,7 @@ namespace GeometryWindowsUI
     public partial class MainForm : Form
     {
         #region Properties
-        ILineProvider _lineProvider; 
+        ILineProvider _lineProvider;
         #endregion
 
         #region Constructor
@@ -17,7 +17,7 @@ namespace GeometryWindowsUI
             lineVisualizerPanel.LineCollection = lstLines.Items;
             lineVisualizerPanel.LineDrawn += LineVisualizerPanel_LineAdded;
             lstLines.SelectedIndexChanged += LstLines_SelectedIndexChanged;
-        } 
+        }
         #endregion
 
         #region Event handling
@@ -33,15 +33,12 @@ namespace GeometryWindowsUI
             lineVisualizerPanel.Refresh();
         }
 
-        private void deleteSelectedLineToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DeleteSelectedLine();
-        }
-
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete) { DeleteSelectedLine(); }
         }
+
+        private void lstLines_DoubleClick(object sender, EventArgs e) => EditSelectedLine();
         #endregion
 
         #region CRUD methods
@@ -62,7 +59,25 @@ namespace GeometryWindowsUI
             {
                 MessageBox.Show($"Line {lstLines.SelectedItem} not deleted.");
             }
-        } 
+        }
+        private void EditSelectedLine()
+        {
+            if (lstLines.SelectedIndex != -1)
+            {
+                LineDialog lineEditor = new LineDialog((Line)lstLines.SelectedItem);
+                if (lineEditor.ShowDialog() == DialogResult.OK)
+                {
+                    _lineProvider.UpdateLine(lineEditor.Line);
+                }
+                //to force refresh of the Line's text in the listbox,
+                //we reinsert it at the same spot:
+                lstLines.Items[lstLines.SelectedIndex] = lstLines.Items[lstLines.SelectedIndex];
+                
+                //and ask the line panel to redraw
+                lineVisualizerPanel.Refresh();
+            }
+        }
         #endregion
+
     }
 }
