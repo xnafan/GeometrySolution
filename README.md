@@ -2,8 +2,8 @@
 
 The Geometry Solution will consist of: 
 * Windows Forms UI which allows the user to draw lines on a Panel using the mouse and deleting them in a listbox
-* REST service (ASP.NET Web API) which has the CRUD functionality (not yet implemented)
-* Data Access Layer (class library talking to MS SQL Server using Dapper) (not yet implemented)
+* REST service (ASP.NET Web API) which has the CRUD functionality 
+* Data Access Layer (class library talking to MS SQL Server using Dapper) 
 
 <img width="677" alt="image" src="https://user-images.githubusercontent.com/3811290/197964168-0d438c1e-43ea-4deb-ab25-f9a38505d945.png">
 
@@ -40,4 +40,29 @@ A Line is merely two Points and an Id (key):
         {
             return Math.Sqrt(Math.Pow(Point1.X - Point2.X, 2) + Math.Pow(Point1.Y - Point2.Y, 2));
         }
+    }
+
+## REST API 
+Simple CRUD service using default read/write controller implementation in VS.NET:
+
+    public class LinesController : ControllerBase
+    {
+        ILineProvider _lineProvider;
+
+        public LinesController(ILineProvider lineProvider) => _lineProvider = lineProvider;
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetLines());
+
+        [HttpGet("{id}")]
+        public ActionResult<Line> Get(int id) => Ok(_lineProvider.GetLine(id));
+
+        [HttpPost]
+        public int Post([FromBody] Line value) => _lineProvider.AddLine(value);
+
+        [HttpPut()]
+        public ActionResult<bool> Put([FromBody] Line value) => _lineProvider.UpdateLine(value);
+
+        [HttpDelete("{id}")]
+        public ActionResult<bool> Delete(int id) => _lineProvider.DeleteLine(id) ? Ok(true) : NotFound  (false);
     }
