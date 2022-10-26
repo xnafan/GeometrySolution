@@ -68,7 +68,7 @@ This is the constructor of the LineDrawingPanel, where you can see that
 * a MouseMove event means "move the end of the current line, if we're drawing)
 * a MouseUp event means "We're done, if that drew a line (it's long enough to not be a single click), save it"
 
-    public LineDrawingPanel()
+      public LineDrawingPanel()
     {
         DoubleBuffered = true; //to avoid flicker when drawing the background
         MouseDown += (object? sender, MouseEventArgs e) => BeginNewLine(e.Location);
