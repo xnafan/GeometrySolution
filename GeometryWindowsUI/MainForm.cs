@@ -36,6 +36,7 @@ namespace GeometryWindowsUI
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete) { DeleteSelectedLine(); }
+            else if (e.KeyCode == Keys.Enter) { EditSelectedLine(); }
         }
 
         private void lstLines_DoubleClick(object sender, EventArgs e) => EditSelectedLine();
