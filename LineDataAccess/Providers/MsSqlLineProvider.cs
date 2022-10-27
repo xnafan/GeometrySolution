@@ -10,7 +10,7 @@ namespace LineDataAccess.Providers
     {
         public string ConnectionString { get; set; }
 
-        #region SQL
+        #region SQL CRUD statements
         private static readonly string INSERT_SQL = "INSERT INTO line (Point1_x, Point1_y, Point2_x, Point2_y) OUTPUT INSERTED.Id VALUES (@Point1_x, @Point1_y, @Point2_x, @Point2_y)";
         private static readonly string DELETE_SQL = "DELETE FROM line WHERE Id=@Id";
         private static readonly string SELECT_ALL_SQL = "SELECT * FROM line";
@@ -23,17 +23,16 @@ namespace LineDataAccess.Providers
 
         #region Dapper CRUD
         public int AddLine(Line line) => CreateConnection().ExecuteScalar<int>(INSERT_SQL, new FlatLine(line));
-
         public bool DeleteLine(int id) => CreateConnection().Execute(DELETE_SQL, new { id }) > 0;
         public Line? GetLine(int id) => CreateConnection().QuerySingle<FlatLine>(SELECT_ONE_SQL).ToLine();
         public IEnumerable<Line> GetLines() => CreateConnection().Query<FlatLine>(SELECT_ALL_SQL).ToList().ConvertAll(flatLine => flatLine.ToLine());
         public bool UpdateLine(Line line) => CreateConnection().Execute(UPDATE_SQL, new FlatLine(line)) > 0;
-
         #endregion
 
+        #region FlatLine helper class for CRUD in DB
         //This struct is a helper class to facilitate conversion
         //to and from a Line to a model object usable by Dapper.
-        //The issue is that the Point object attributes on the Line object
+        //The issue it solves is that the Point object attributes on the Line object
         //have their own X and Y attributes, which aren't addressable
         //when saving/loading from DB using Dapper.
         // The FlatLine class stores the two Point structs' X and Y on itself.
@@ -54,6 +53,8 @@ namespace LineDataAccess.Providers
                 Point2_y = line.Point2.Y;
             }
             public Line ToLine() => new Line(new Point(Point1_x, Point1_y), new Point(Point2_x, Point2_y)) { Id = this.Id };
-        }
+        } 
+        #endregion
+
     }
 }
