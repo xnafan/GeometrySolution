@@ -56,8 +56,8 @@ namespace GeometryWindowsUI
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lineVisualizerPanel);
-            this.splitContainer1.Size = new System.Drawing.Size(1352, 837);
-            this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.Size = new System.Drawing.Size(1284, 701);
+            this.splitContainer1.SplitterDistance = 425;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -65,9 +65,9 @@ namespace GeometryWindowsUI
             // 
             this.btnEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnEdit.Enabled = false;
-            this.btnEdit.Location = new System.Drawing.Point(0, 722);
+            this.btnEdit.Location = new System.Drawing.Point(0, 586);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(448, 56);
+            this.btnEdit.Size = new System.Drawing.Size(425, 56);
             this.btnEdit.TabIndex = 2;
             this.btnEdit.Text = "&Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -77,9 +77,9 @@ namespace GeometryWindowsUI
             // 
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(0, 778);
+            this.btnDelete.Location = new System.Drawing.Point(0, 642);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(448, 59);
+            this.btnDelete.Size = new System.Drawing.Size(425, 59);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "&Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -91,10 +91,10 @@ namespace GeometryWindowsUI
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstLines.FormattingEnabled = true;
-            this.lstLines.ItemHeight = 32;
+            this.lstLines.ItemHeight = 21;
             this.lstLines.Location = new System.Drawing.Point(0, 0);
             this.lstLines.Name = "lstLines";
-            this.lstLines.Size = new System.Drawing.Size(448, 740);
+            this.lstLines.Size = new System.Drawing.Size(425, 592);
             this.lstLines.TabIndex = 0;
             this.lstLines.DoubleClick += new System.EventHandler(this.lstLines_DoubleClick);
             // 
@@ -106,14 +106,14 @@ namespace GeometryWindowsUI
             this.lineVisualizerPanel.Location = new System.Drawing.Point(0, 0);
             this.lineVisualizerPanel.Name = "lineVisualizerPanel";
             this.lineVisualizerPanel.SelectedLine = null;
-            this.lineVisualizerPanel.Size = new System.Drawing.Size(899, 837);
+            this.lineVisualizerPanel.Size = new System.Drawing.Size(854, 701);
             this.lineVisualizerPanel.TabIndex = 1;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1352, 837);
+            this.ClientSize = new System.Drawing.Size(1284, 701);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.KeyPreview = true;

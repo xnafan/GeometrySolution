@@ -8,6 +8,7 @@ namespace LineDataAccess.Model
         {
             Point1 = point1;
             Point2 = point2;
+
         }
         public int Id { get; set; }
         public Point Point1 { get; set; }

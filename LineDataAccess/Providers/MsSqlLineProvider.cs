@@ -15,7 +15,7 @@ namespace LineDataAccess.Providers
         private static readonly string DELETE_SQL = "DELETE FROM line WHERE Id=@Id";
         private static readonly string SELECT_ALL_SQL = "SELECT * FROM line";
         private static readonly string SELECT_ONE_SQL = "SELECT * FROM line WHERE Id=@Id";
-        private static readonly string UPDATE_SQL = "UPDATE line  SET Point1_x=@Point1_x, Point1_y=@Point1_y, Point2_x = @Point2_x, Point2_y=@Point2_y";
+        private static readonly string UPDATE_SQL = "UPDATE line  SET Point1_x=@Point1_x, Point1_y=@Point1_y, Point2_x = @Point2_x, Point2_y=@Point2_y WHERE Id=@Id";
 
         #endregion
         public MsSqlLineProvider(string connectionString) => ConnectionString = connectionString;
@@ -39,7 +39,7 @@ namespace LineDataAccess.Providers
         // The FlatLine class stores the two Point structs' X and Y on itself.
         struct FlatLine
         {
-            public int Id = 0;
+            public int Id { get; set; } = 0;
             public int Point1_x { get; set; } = 0;
             public int Point1_y { get; set; } = 0;
             public int Point2_x { get; set; } = 0;
