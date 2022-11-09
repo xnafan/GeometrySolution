@@ -8,8 +8,8 @@ namespace LineService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //builder.Services.AddSingleton<ILineProvider, InMemoryLineProvider>();
-            builder.Services.AddSingleton<ILineProvider>(_ => new MsSqlLineProvider("Server=.;Database=Geometry;Trusted_Connection=True;"));
+            builder.Services.AddSingleton<ILineProvider, InMemoryLineProvider>();
+            //builder.Services.AddSingleton<ILineProvider>(_ => new MsSqlLineProvider("Server=.;Database=Geometry;Trusted_Connection=True;"));
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -17,12 +17,10 @@ namespace LineService
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
