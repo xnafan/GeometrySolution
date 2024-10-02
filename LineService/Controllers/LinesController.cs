@@ -2,29 +2,28 @@
 using LineDataAccess.Providers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LineService.Controllers
+namespace LineService.Controllers;
+
+[Route("api/v1/[controller]")]
+[ApiController]
+public class LinesController : ControllerBase
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class LinesController : ControllerBase
-    {
-        ILineProvider _lineProvider;
-    
-        public LinesController(ILineProvider lineProvider) => _lineProvider = lineProvider;
-    
-        [HttpGet]
-        public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetLines());
-    
-        [HttpGet("{id}")]
-        public ActionResult<Line> Get(int id) => Ok(_lineProvider.GetLine(id));
-    
-        [HttpPost]
-        public int Post([FromBody] Line value) => _lineProvider.AddLine(value);
-    
-        [HttpPut()]
-        public ActionResult<bool> Put([FromBody] Line value) => _lineProvider.UpdateLine(value);
-    
-        [HttpDelete("{id}")]
-        public ActionResult<bool> Delete(int id) => _lineProvider.DeleteLine(id) ? Ok(true) : NotFound  (false);
-    }
+    ILineDAO _lineProvider;
+
+    public LinesController(ILineDAO lineProvider) => _lineProvider = lineProvider;
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetAll());
+
+    [HttpGet("{id}")]
+    public ActionResult<Line> Get(int id) => Ok(_lineProvider.Get(id));
+
+    [HttpPost]
+    public int Post([FromBody] Line value) => _lineProvider.Insert(value);
+
+    [HttpPut()]
+    public ActionResult<bool> Put(int id, [FromBody] Line value) => _lineProvider.Update(value);
+
+    [HttpDelete("{id}")]
+    public ActionResult<bool> Delete(int id) => _lineProvider.Delete(id) ? Ok(true) : NotFound  (false);
 }

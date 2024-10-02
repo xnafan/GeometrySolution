@@ -6,11 +6,11 @@ namespace GeometryWindowsUI
     public partial class MainForm : Form
     {
         #region Properties
-        ILineProvider _lineProvider;
+        ILineDAO _lineProvider;
         #endregion
 
         #region Constructor
-        public MainForm(ILineProvider lineProvider)
+        public MainForm(ILineDAO lineProvider)
         {
             InitializeComponent();
             _lineProvider = lineProvider;
@@ -50,7 +50,7 @@ namespace GeometryWindowsUI
         #region CRUD methods
         private void AddLine(Line line)
         {
-            int newId = _lineProvider.AddLine(line);
+            int newId = _lineProvider.Insert(line);
             if (newId > 0)
             {
                 line.Id = newId;
@@ -62,7 +62,7 @@ namespace GeometryWindowsUI
         private void DeleteSelectedLine()
         {
             if (lstLines.SelectedIndex == -1) { return; }
-            if (_lineProvider.DeleteLine(((Line)lstLines.SelectedItem).Id))
+            if (_lineProvider.Delete(((Line)lstLines.SelectedItem).Id))
             {
                 lineVisualizerPanel.LineCollection?.Remove((Line)lstLines.SelectedItem);
             }
@@ -78,7 +78,7 @@ namespace GeometryWindowsUI
                 LineDialog lineEditor = new LineDialog((Line)lstLines.SelectedItem);
                 if (lineEditor.ShowDialog() == DialogResult.OK)
                 {
-                    _lineProvider.UpdateLine(lineEditor.Line);
+                    _lineProvider.Update(lineEditor.Line);
                 }
                 //to force refresh of the Line's text in the listbox,
                 //we reinsert it at the same spot:
@@ -92,7 +92,7 @@ namespace GeometryWindowsUI
         private void LoadLines()
         {
             lstLines.Items.Clear();
-            _lineProvider.GetLines().ToList().ForEach(line => lstLines.Items.Add(line));
+            _lineProvider.GetAll().ToList().ForEach(line => lstLines.Items.Add(line));
         }
         #endregion
 

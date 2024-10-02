@@ -1,44 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="LineDataAccess.Providers.InMemoryLineProvider">
+  <Class Name="LineDataAccess.Providers.InMemoryLineDAO">
     <Position X="3.25" Y="4.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAkAAAAAAAAAABAAEQABAAQAAAAAIAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Providers\InMemoryLineProvider.cs</FileName>
+      <HashCode>AAQAAEAAAAAAABBAEAABAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Providers\InMemoryLineDAO.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="LineDataAccess.Providers.MsSqlLineProvider">
+  <Class Name="LineDataAccess.Providers.MsSqlLineDAO">
     <Position X="6.25" Y="4.5" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Struct Name="LineDataAccess.Providers.MsSqlLineProvider.FlatLine" Collapsed="true">
+      <Struct Name="LineDataAccess.Providers.MsSqlLineDAO.FlatLine" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Providers\MsSqlLineProvider.cs</NewMemberFileName>
+          <NewMemberFileName>Providers\MsSqlLineDAO.cs</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAkIBAAAAAAAAAEAARAAAAQAAABAIAAAECAAAAAAAAA=</HashCode>
-      <FileName>Providers\MsSqlLineProvider.cs</FileName>
+      <HashCode>AAQIBEAAAAAAAAFAABAAAAAAAAFAAAAAEiAAAAAAAAA=</HashCode>
+      <FileName>Providers\MsSqlLineDAO.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="GeometryWindowsUI.Provider.RestServiceLineProvider">
+  <Class Name="GeometryWindowsUI.Provider.RestServiceLineDAO">
     <Position X="9.5" Y="4.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAkAAAAAAAAAAEAAAQAAAAQAAAAAIAAgAAAAAAAAAAA=</HashCode>
-      <FileName>Providers\RestServiceLineProvider.cs</FileName>
+      <HashCode>AAQAAEAAAAAAAEBAAAAAAAAAAAEAAAAgAgAAAAAAAAA=</HashCode>
+      <FileName>Providers\RestServiceLineDAO.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="LineDataAccess.Providers.ILineProvider">
+  <Interface Name="LineDataAccess.Providers.ILineDAO">
     <Position X="6.25" Y="1.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAkAAAAAAAAAAAAAAQAAAAQAAAAAIAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Providers\ILineProvider.cs</FileName>
+      <HashCode>AAQAAEAAAAAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Providers\ILineDAO.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
