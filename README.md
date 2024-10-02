@@ -11,15 +11,15 @@ Everything has been kept as simple as possible, to focus on the functionality an
 
 # Architecture overview
 
-All layers and tiers are separated from the layers below them using dependency injection of a ILineProvider implementation:
+All layers and tiers are separated from the layers below them using dependency injection of a ILineDAO implementation:
 ```
-public interface ILineProvider
+public interface ILineDAO
 {
-    IEnumerable<Line> GetLines();
-    Line? GetLine(int id);
-    bool DeleteLine(int id);
-    bool UpdateLine(Line line);
-    int AddLine(Line line);
+    IEnumerable<Line> GetAll();
+    Line? Get(int id);
+    bool Delete(int id);
+    bool Update(Line line);
+    int Insert(Line line);
 }
 ```
 These implementations already exist: 
@@ -27,7 +27,7 @@ These implementations already exist:
 * In-memory store (for testing).
 * REST client for communicating with the REST service (using RestSharp)
 
-![image](https://user-images.githubusercontent.com/3811290/198127597-9b72b942-2c90-47ed-b143-ae8f43e1bc6c.png)
+![image](https://github.com/user-attachments/assets/bce9391b-552b-42e3-8367-404ddbddf784)
 
 This architecture means that the Windows UI can run alone with just an In-memory store, or directly communicate with a database locally.
 Alternately, it can communicate with a REST service (LinesController), and the persistence medium for this service can, again, be either database, memory, or even a new REST server 😄
@@ -94,9 +94,9 @@ Simple CRUD service using default read/write controller implementation in VS.NET
 ```
 public class LinesController : ControllerBase
 {
-    ILineProvider _lineProvider;
+    ILineDAO _lineProvider;
 
-    public LinesController(ILineProvider lineProvider) => _lineProvider = lineProvider;
+    public LinesController(ILineDAO lineProvider) => _lineProvider = lineProvider;
 
     [HttpGet]
     public ActionResult<IEnumerable<Line>?> Get() => Ok(_lineProvider.GetLines());
